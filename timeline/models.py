@@ -152,7 +152,6 @@ class Post(models.Model):
                 raise('Failure trying to remove image from filesystem.')
         return True
 
-    @transaction.atomic
     def delete(self, user):
         """
         Method to delete content already posted.
@@ -214,7 +213,6 @@ class Comment(models.Model):
         """
         return 'Autor: {user}.\nText: {text}'.format(user=self.author, text=self.text)
 
-    @transaction.atomic
     def approve(self):
         """
         Approve a comment.
@@ -225,7 +223,6 @@ class Comment(models.Model):
             cache_bust([('comments', self.post.pk)])
             return True
 
-    @transaction.atomic
     def disapprove(self):
         """
         Disapprove a comment.
@@ -245,7 +242,6 @@ class Comment(models.Model):
         elif status == 'disapprove':
             return self.disapprove()
 
-    @transaction.atomic
     def delete(self, user):
         """
         Remove comment from database.
