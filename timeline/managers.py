@@ -4,7 +4,7 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.core.cache import cache
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
-from django.db import models, transaction
+from django.db import models
 from django.db.models import Q
 from django.utils import timezone
 
@@ -72,7 +72,6 @@ class CommentManager(models.Manager):
         count = self.disapproved_comments(post).count()
         return count
 
-    @transaction.atomic
     def delete_disapproved(self, post):
         """
         Remove disapproved comments for a post.
@@ -127,7 +126,6 @@ class TimelineManager(models.Manager):
     Timeline model manager.
     """
 
-    @transaction.atomic
     def add_to_timeline(self, instance, user):
         """
         Add instance to user's timeline when saving.
@@ -139,7 +137,6 @@ class TimelineManager(models.Manager):
             return timeline
         return False
 
-    @transaction.atomic
     def remove_from_timeline(self, instance, user):
         """
         Remove instance from user's timeline when deleting.
