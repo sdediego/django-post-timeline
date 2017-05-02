@@ -72,6 +72,7 @@ class CommentManager(models.Manager):
         count = self.disapproved_comments(post).count()
         return count
 
+    @transaction.atomic
     def delete_disapproved(self, post):
         """
         Remove disapproved comments for a post.
@@ -126,6 +127,7 @@ class TimelineManager(models.Manager):
     Timeline model manager.
     """
 
+    @transaction.atomic
     def add_to_timeline(self, instance, user):
         """
         Add instance to user's timeline when saving.
@@ -137,6 +139,7 @@ class TimelineManager(models.Manager):
             return timeline
         return False
 
+    @transaction.atomic
     def remove_from_timeline(self, instance, user):
         """
         Remove instance from user's timeline when deleting.
